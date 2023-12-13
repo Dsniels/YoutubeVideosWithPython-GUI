@@ -1,9 +1,11 @@
 # YoutubeVideos
 
+- Intall pytube
+* Install customtkinter and Tkinter
++ Install ssl
 
-Intall pytube
-Install customtkinter and Tkinter
-Install ssl
+
+
 
 Al ingresar un link el programa identificara si se trata de una playlist o de un video unico, 
 opcional se puede indicar si se desea descargar solo el audio, en caso de no seleccionar la casilla audio el programa descargara el video.
