@@ -18,6 +18,9 @@ Ejecutable en dist/main/musica y videos.exe
 >para las playlist se creara una carpeta "Playlist" 
 >para videos se creara una carpeta "Youtube videos"
 >si se descarga con la opcion audio este se descargara en archivo .mp3 y se guardara en la carpeta correspondiente si se descargo como playlist o como video unico
+>
+>El ejecutable requiere de la carpeta _internal en el mismo directorio para su ejecucion
+
 
 >[!IMPORTANT]
 >No se puede cancelar la descarga, una vez iniciada debe terminar 
