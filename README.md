@@ -10,6 +10,9 @@
 Al ingresar un link el programa identificara si se trata de una playlist o de un video unico, 
 opcional se puede indicar si se desea descargar solo el audio, en caso de no seleccionar la casilla audio el programa descargara el video.
 
+Ejecutable en dist/main/musica y videos.exe
+
+
 >[!NOTE]
 >Las descargas se ubicaran en la direccion "C:\Users\Tu_usuario\OneDrive\Desktop"
 >para las playlist se creara una carpeta "Playlist" 
