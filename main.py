@@ -10,9 +10,13 @@ import re
 
 #Descarga de video
 ssl._create_default_https_context = ssl._create_unverified_context
+path = os.path.join(os.path.expanduser('~'), 'Desktop')
+
+if not os.path.exists(os.path.join(path, 'Descargas')):
+    os.mkdir(os.path.join(path, 'Descargas'))
+download_path = os.path.join(path, 'Descargas')
 
 def start_download_thread():
-    title.configure(text="")
     percentage.configure(text="0%")
     finishLabel.configure(text="")
     progressBar.set(0)
@@ -25,9 +29,7 @@ def start_download_thread():
 def download_video():
     
     try:
-        title.configure(text="") 
         url = URL.get()
-
         if "youtube.com/playlist" in url:
             progressBar.pack_forget()
             percentage.pack_forget()
@@ -40,7 +42,7 @@ def download_video():
                 finishLabel.configure(text=f"Espere...Descargando video {current_video} de {total_videos}")
         
                 yt = YouTube(video_url)
-                invalid_chars = r'<>:"/\|?*'
+                invalid_chars = r'".<>:"/\|?*'
                 cleaned_title = re.sub(f'[{re.escape(invalid_chars)}]', '', yt.title)  # Eliminar caracteres inválidos
                 if music.get():
                     video = yt.streams.filter(only_audio=True).first()
@@ -50,7 +52,7 @@ def download_video():
                     filename = f"{cleaned_title}.mp4"
                 
                 title.configure(text=yt.title, text_color="white")
-                video.download(filename=filename, output_path=output_path_playlist)
+                video.download(filename=filename, output_path=download_path)
     
             finishLabel.configure(text="Descargado!")
             progressBar.pack_forget()
@@ -62,19 +64,19 @@ def download_video():
                 filename=f"{video.title}.mp3"
             else:
                 video = yt.streams.get_highest_resolution()
-                filename=f"{video.title}"
+                filename=f"{video.title}.mp4"
                
-
             title.configure(text=yt.title, text_color="white")
             finishLabel.configure(text="",text_color="white")
-            video.download(filename=filename, output_path=output_path)
+            video.download( output_path=download_path)
             finishLabel.configure(text="Descargado!")
         URL.set("")
-        title.configure(text="")
+        title.configure(text="Ingrese el link del video")
  
 
     except Exception as e:
         finishLabel.configure(text=f"Error {e}", text_color="red")
+        print(e)
 
 
 
@@ -95,11 +97,6 @@ def on_progress(stream, chunk, bytes_remaining):
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("blue")
 
-#Configuracion de descarga
-desktop_path = os.path.join(os.path.expanduser('~'), 'OneDrive\Desktop')
-output_path = os.path.join(desktop_path, 'YouTubeVideos')
-os.makedirs(output_path, exist_ok=True)
-output_path_playlist = os.path.join(desktop_path, 'Playlist')
 
 #app frame
 app = customtkinter.CTk()
@@ -124,7 +121,7 @@ title.pack(padx=10, pady=20)
 
 music = customtkinter.BooleanVar()
 check_music = customtkinter.CTkCheckBox(frame, text="Audio",variable=music, onvalue=True, offvalue=False)
-check_music.pack(side="top", anchor="w",padx=5, pady=5)
+check_music.pack(side="top", anchor="w",padx=9, pady=10)
 
 
 
