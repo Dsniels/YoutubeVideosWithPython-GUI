@@ -74,7 +74,7 @@
  [],
  False,
  False,
- 1702455023,
+ 1702537177,
  [('runw.exe',
    'D:\\Repositories\\YoutubeVideos\\env\\lib\\python3.10\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\runw.exe',
    'EXECUTABLE')],
