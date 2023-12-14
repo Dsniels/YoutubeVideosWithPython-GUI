@@ -6,15 +6,18 @@ import threading
 import ssl
 import os
 import re
-
+import time
 
 #Descarga de video
 ssl._create_default_https_context = ssl._create_unverified_context
-path = os.path.join(os.path.expanduser('~'), 'Desktop')
 
-if not os.path.exists(os.path.join(path, 'Descargas')):
-    os.mkdir(os.path.join(path, 'Descargas'))
-download_path = os.path.join(path, 'Descargas')
+now = time.time()
+time_struct = time.gmtime(now)
+
+day = time_struct.tm_wday
+month = time_struct.tm_mon
+year = time_struct.tm_year
+
 
 def start_download_thread():
     percentage.configure(text="0%")
@@ -26,7 +29,7 @@ def start_download_thread():
     percentage.pack()
     progressBar.pack(padx=10, pady=10)
 
-def download_video():
+def download_video(output_path=f"Videos_descargados/{day}-{month}-{year}"):
     
     try:
         url = URL.get()
@@ -40,7 +43,6 @@ def download_video():
                 
                 current_video += 1
                 finishLabel.configure(text=f"Espere...Descargando video {current_video} de {total_videos}")
-        
                 yt = YouTube(video_url)
                 invalid_chars = r'".<>:"/\|?*'
                 cleaned_title = re.sub(f'[{re.escape(invalid_chars)}]', '', yt.title)  # Eliminar caracteres inválidos
@@ -52,7 +54,7 @@ def download_video():
                     filename = f"{cleaned_title}.mp4"
                 
                 title.configure(text=yt.title, text_color="white")
-                video.download(filename=filename, output_path=download_path)
+                video.download(filename=filename, output_path=output_path)
     
             finishLabel.configure(text="Descargado!")
             progressBar.pack_forget()
@@ -68,7 +70,7 @@ def download_video():
                
             title.configure(text=yt.title, text_color="white")
             finishLabel.configure(text="",text_color="white")
-            video.download( output_path=download_path)
+            video.download( output_path=output_path)
             finishLabel.configure(text="Descargado!")
         URL.set("")
         title.configure(text="Ingrese el link del video")
