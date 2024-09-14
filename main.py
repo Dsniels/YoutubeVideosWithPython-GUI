@@ -30,9 +30,10 @@ def start_download_thread():
     progressBar.pack(padx=10, pady=10)
 
 def download_video(output_path=f"Videos_descargados/{day}-{month}-{year}"):
-    
+
     try:
         url = URL.get()
+        print(url)
         if "youtube.com/playlist" in url:
             progressBar.pack_forget()
             percentage.pack_forget()
@@ -65,7 +66,7 @@ def download_video(output_path=f"Videos_descargados/{day}-{month}-{year}"):
                 video = yt.streams.get_audio_only()
                 filename=f"{video.title}.mp3"
             else:
-                video = yt.streams.get_highest_resolution()
+                video_stream = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
                 filename=f"{video.title}.mp4"
                
             title.configure(text=yt.title, text_color="white")
